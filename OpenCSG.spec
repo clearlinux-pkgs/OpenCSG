@@ -4,12 +4,13 @@
 #
 Name     : OpenCSG
 Version  : 1.4.2
-Release  : 3
+Release  : 4
 URL      : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
 Source0  : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
 Summary  : Library for image-based CSG rendering using OpenGL.
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0
+Requires: OpenCSG-lib = %{version}-%{release}
 Requires: OpenCSG-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-qmake
@@ -22,6 +23,25 @@ Patch1: build.patch
 # GLEW - The OpenGL Extension Wrangler Library
 http://glew.sourceforge.net/
 https://github.com/nigels-com/glew
+
+%package dev
+Summary: dev components for the OpenCSG package.
+Group: Development
+Requires: OpenCSG-lib = %{version}-%{release}
+Provides: OpenCSG-devel = %{version}-%{release}
+
+%description dev
+dev components for the OpenCSG package.
+
+
+%package lib
+Summary: lib components for the OpenCSG package.
+Group: Libraries
+Requires: OpenCSG-license = %{version}-%{release}
+
+%description lib
+lib components for the OpenCSG package.
+
 
 %package license
 Summary: license components for the OpenCSG package.
@@ -45,7 +65,7 @@ test -r config.log && cat config.log
 make
 
 %install
-export SOURCE_DATE_EPOCH=1546438891
+export SOURCE_DATE_EPOCH=1546439557
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/OpenCSG
 cp glew/LICENSE.txt %{buildroot}/usr/share/package-licenses/OpenCSG/glew_LICENSE.txt
@@ -55,6 +75,17 @@ cp license.txt %{buildroot}/usr/share/package-licenses/OpenCSG/license.txt
 
 %files
 %defattr(-,root,root,-)
+
+%files dev
+%defattr(-,root,root,-)
+/usr/include/*.h
+/usr/lib64/libopencsg.so
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/libopencsg.so.1
+/usr/lib64/libopencsg.so.1.4
+/usr/lib64/libopencsg.so.1.4.2
 
 %files license
 %defattr(0644,root,root,0755)
