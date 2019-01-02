@@ -4,7 +4,7 @@
 #
 Name     : OpenCSG
 Version  : 1.4.2
-Release  : 2
+Release  : 3
 URL      : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
 Source0  : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
 Summary  : Library for image-based CSG rendering using OpenGL.
@@ -16,6 +16,7 @@ BuildRequires : buildreq-qmake
 BuildRequires : freeglut-dev
 BuildRequires : glew-dev
 BuildRequires : glu-dev
+Patch1: build.patch
 
 %description
 # GLEW - The OpenGL Extension Wrangler Library
@@ -32,6 +33,7 @@ license components for the OpenCSG package.
 
 %prep
 %setup -q -n OpenCSG-1.4.2
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -43,7 +45,7 @@ test -r config.log && cat config.log
 make
 
 %install
-export SOURCE_DATE_EPOCH=1546438730
+export SOURCE_DATE_EPOCH=1546438891
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/OpenCSG
 cp glew/LICENSE.txt %{buildroot}/usr/share/package-licenses/OpenCSG/glew_LICENSE.txt

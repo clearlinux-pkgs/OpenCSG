@@ -1,0 +1,11 @@
+--- OpenCSG-1.4.2/src/src.pro~	2016-09-26 21:11:16.000000000 +0000
++++ OpenCSG-1.4.2/src/src.pro	2019-01-02 14:19:01.778899304 +0000
+@@ -3,7 +3,7 @@
+ VERSION = 1.4.2
+ 
+ isEmpty(INSTALLDIR) {
+-  INSTALLDIR = /usr/local
++  INSTALLDIR = /usr
+ }
+ 
+ CONFIG += opengl warn_on release
