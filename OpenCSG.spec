@@ -4,7 +4,7 @@
 #
 Name     : OpenCSG
 Version  : 1.4.2
-Release  : 4
+Release  : 5
 URL      : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
 Source0  : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
 Summary  : Library for image-based CSG rendering using OpenGL.
