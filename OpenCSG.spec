@@ -4,10 +4,10 @@
 #
 Name     : OpenCSG
 Version  : 1.4.2
-Release  : 5
+Release  : 6
 URL      : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
 Source0  : http://www.opencsg.org/OpenCSG-1.4.2.tar.gz
-Summary  : Library for image-based CSG rendering using OpenGL.
+Summary  : The OpenGL Extension Wrangler library
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0
 Requires: OpenCSG-lib = %{version}-%{release}
@@ -21,14 +21,14 @@ Patch1: build.patch
 
 %description
 # GLEW - The OpenGL Extension Wrangler Library
-http://glew.sourceforge.net/
-https://github.com/nigels-com/glew
+![](http://glew.sourceforge.net/glew.png)
 
 %package dev
 Summary: dev components for the OpenCSG package.
 Group: Development
 Requires: OpenCSG-lib = %{version}-%{release}
 Provides: OpenCSG-devel = %{version}-%{release}
+Requires: OpenCSG = %{version}-%{release}
 
 %description dev
 dev components for the OpenCSG package.
@@ -53,24 +53,26 @@ license components for the OpenCSG package.
 
 %prep
 %setup -q -n OpenCSG-1.4.2
+cd %{_builddir}/OpenCSG-1.4.2
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-%qmake INSTALLDIR=/usr
+export LANG=C.UTF-8
+export GCC_IGNORE_WERROR=1
+%qmake QMAKE_CFLAGS+=-fno-lto QMAKE_CXXFLAGS+=-fno-lto  INSTALLDIR=/usr
 test -r config.log && cat config.log
 make
 
 %install
-export SOURCE_DATE_EPOCH=1546439557
+export SOURCE_DATE_EPOCH=1604606020
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/OpenCSG
-cp glew/LICENSE.txt %{buildroot}/usr/share/package-licenses/OpenCSG/glew_LICENSE.txt
-cp glew/doc/gpl.txt %{buildroot}/usr/share/package-licenses/OpenCSG/glew_doc_gpl.txt
-cp license.txt %{buildroot}/usr/share/package-licenses/OpenCSG/license.txt
+cp %{_builddir}/OpenCSG-1.4.2/glew/LICENSE.txt %{buildroot}/usr/share/package-licenses/OpenCSG/0ca22faedb8ee495473a82c4d91452493b22ac9f
+cp %{_builddir}/OpenCSG-1.4.2/glew/doc/gpl.txt %{buildroot}/usr/share/package-licenses/OpenCSG/4d1d37f306ed270cda5b2741fac3abf0a7b012e5
+cp %{_builddir}/OpenCSG-1.4.2/license.txt %{buildroot}/usr/share/package-licenses/OpenCSG/71c792dea8e57d7859f61cfef5f735f41d39e40c
 %make_install
 
 %files
@@ -78,7 +80,7 @@ cp license.txt %{buildroot}/usr/share/package-licenses/OpenCSG/license.txt
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/opencsg.h
 /usr/lib64/libopencsg.so
 
 %files lib
@@ -89,6 +91,6 @@ cp license.txt %{buildroot}/usr/share/package-licenses/OpenCSG/license.txt
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/OpenCSG/glew_LICENSE.txt
-/usr/share/package-licenses/OpenCSG/glew_doc_gpl.txt
-/usr/share/package-licenses/OpenCSG/license.txt
+/usr/share/package-licenses/OpenCSG/0ca22faedb8ee495473a82c4d91452493b22ac9f
+/usr/share/package-licenses/OpenCSG/4d1d37f306ed270cda5b2741fac3abf0a7b012e5
+/usr/share/package-licenses/OpenCSG/71c792dea8e57d7859f61cfef5f735f41d39e40c
