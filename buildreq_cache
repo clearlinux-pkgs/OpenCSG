@@ -1,3 +1,4 @@
 1.4.2
 freeglut-dev
 glu-dev
+pkgconfig(x11)
